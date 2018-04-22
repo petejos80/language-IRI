@@ -5,7 +5,7 @@ require("dotenv").config();
 // =========================================================================================
 var fs = require("fs");
 var keys = require('./keys.js')
-// var spotify = require('spotify');
+var spotify = require('spotify');
 var Twitter = require('twitter');
 // var omdb = require('omdb');
 var action = process.argv[2];
@@ -59,13 +59,15 @@ var params = {screen_name: 'WaffleHouse'};
 // Function 2/4 - Spotify
 function spotifyFunction() {
 
-    var Spotify = require('spotify');
+    // var spotify = new Spotify(keys.spotify);
+
+    var spotify = require('spotify');
     
     spotify.search({ type: 'track', query: 'dancing in the moonlight' }, function(err, data) {
         if ( err ) {
             console.log('Error occurred: ' + err);
             return;
         }
-
+            console.log("spotify works");
     });
 }
