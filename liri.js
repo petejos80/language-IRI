@@ -5,17 +5,21 @@ require("dotenv").config();
 // =========================================================================================
 var fs = require("fs");
 var keys = require('./keys.js')
-// var spotify = require('spotify');
-var spotify = require('node-spotify-api');
+var Spotify = require('node-spotify-api');
 var Twitter = require('twitter');
 // var omdb = require('omdb');
 var request = require("request");
+
+/* Assign values to process.argv[2] and process.argv[3]
+For examples, consider the following command: node liri.js spotify-this-song Hello
+In the above example, spotify-this-song = process.argv[2] and Hello = process.argv[3] */
 var action = process.argv[2];
 var value = process.argv[3];
 
 
 // SWITCH CASE //
-// The switch-case will direct which function gets run.
+/* The switch-case directs which function gets run depending on which 'switch case' string
+is called from the command line at the process.argv[3] position */
 // =========================================================================================
 switch (action) {
 case "my-tweets":
@@ -61,25 +65,25 @@ var params = {screen_name: 'WaffleHouse'};
 // Function 2/4 - Spotify
 function spotifyFunction() {
 
-    var Spotify = require('node-spotify-api');
-
     var spotify = new Spotify(keys.spotify);
 
+    // Set the variable 'value' equal to 4th word in command line
     var value = process.argv[3];
 
     spotify.search({ type: 'track', query: value, limit: '1' }, function(err, data) {
         if (err) {
           return console.log('Error occurred: ' + err);
         } else {
-            console.log('Artist: ' + data.tracks.items[0].artists[0].name);
+            // To view JSON in structured format, use the templay from the line below ˅
             // console.log('Song Name: ' + JSON.stringify(data.tracks.items[0], null, "\t")); 
-            console.log('Song Name: ' + value); 
+            console.log('Artist: ' + data.tracks.items[0].artists[0].name);
+            console.log('Song Name: ' + data.tracks.items[0].name); 
             console.log('Preview URL: ' + data.tracks.items[0].href); 
-            console.log('Album Name: ' + data.tracks.items[0].name); 
+            console.log('Album Name: ' + data.tracks.items[0].album.name); 
         }
       });
       
     }
 
 // Function 3/4 - Movie OMDB
-function movieFunction() {
+// function movieFunction() {
