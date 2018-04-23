@@ -7,7 +7,6 @@ var fs = require("fs");
 var keys = require('./keys.js')
 var Spotify = require('node-spotify-api');
 var Twitter = require('twitter');
-// var omdb = require('omdb');
 var request = require("request");
 
 /* Assign values to process.argv[2] and process.argv[3]
@@ -15,6 +14,9 @@ For examples, consider the following command: node liri.js spotify-this-song Hel
 In the above example, spotify-this-song = process.argv[2] and Hello = process.argv[3] */
 var action = process.argv[2];
 var value = process.argv[3];
+
+// Used in function to automatically add a "+" to searches with multiple words
+var nodeArgs = process.argv;
 
 
 // SWITCH CASE //
@@ -38,6 +40,26 @@ case "do-what-it-says":
   doFunction();
   break;
 }
+
+// Compensate for spaces between words by automatically adding a "+" symbol 
+for (var i = 2; i < nodeArgs.length; i++) {
+
+    if (i > 2 && i < nodeArgs.length) {
+  
+      value = value + "+" + nodeArgs[i];
+  
+    }
+  
+    else {
+  
+      value += nodeArgs[i];
+  
+    }
+  }
+  
+
+
+
 
 
 // FUNCTIONS // 
@@ -86,4 +108,21 @@ function spotifyFunction() {
     }
 
 // Function 3/4 - Movie OMDB
-// function movieFunction() {
+function movieFunction() {
+    
+    var queryUrl = "http://www.omdbapi.com/?t=" + value + "&y=&plot=short&apikey=trilogy";
+
+    // This line is just to help us debug against the actual URL.
+    console.log(queryUrl);
+    
+    request(queryUrl, function(error, response, body) {
+    
+      // If the request is successful
+      if (!error && response.statusCode === 200) {
+    
+        // Parse the body of the site and recover just the imdbRating
+        // (Note: The syntax below for parsing isn't obvious. Just spend a few moments dissecting it).
+        console.log("Release Year: " + JSON.parse(body).Year);
+      }
+    });
+}
