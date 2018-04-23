@@ -74,7 +74,8 @@ function spotifyFunction() {
             console.log('Artist: ' + data.tracks.items[0].artists[0].name);
             // console.log('Song Name: ' + JSON.stringify(data.tracks.items[0], null, "\t")); 
             console.log('Song Name: ' + value); 
-            console.log('Preview URL: ' + data.tracks.items[0].preview_url); 
+            console.log('Preview URL: ' + data.tracks.items[0].href); 
+            console.log('Album Name: ' + data.tracks.items[0].name); 
         }
       });
       
