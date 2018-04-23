@@ -5,9 +5,11 @@ require("dotenv").config();
 // =========================================================================================
 var fs = require("fs");
 var keys = require('./keys.js')
-var spotify = require('spotify');
+// var spotify = require('spotify');
+var spotify = require('node-spotify-api');
 var Twitter = require('twitter');
 // var omdb = require('omdb');
+var request = require("request");
 var action = process.argv[2];
 var value = process.argv[3];
 
@@ -59,15 +61,21 @@ var params = {screen_name: 'WaffleHouse'};
 // Function 2/4 - Spotify
 function spotifyFunction() {
 
-    // var spotify = new Spotify(keys.spotify);
+    var Spotify = require('node-spotify-api');
 
-    var spotify = require('spotify');
-    
-    spotify.search({ type: 'track', query: 'dancing in the moonlight' }, function(err, data) {
-        if ( err ) {
-            console.log('Error occurred: ' + err);
-            return;
+    var spotify = new Spotify(keys.spotify);
+
+    var value = process.argv[3];
+
+    spotify.search({ type: 'track', query: value, limit: '1' }, function(err, data) {
+        if (err) {
+          return console.log('Error occurred: ' + err);
+        } else {
+            console.log('Artist: ' + data.tracks.items[0].artists[0].name);
+            // console.log('Song Name: ' + JSON.stringify(data.tracks.items[0], null, "\t")); 
+            console.log('Song Name: ' + value); 
+            console.log('Preview URL: ' + data.tracks.items[0].preview_url); 
         }
-            console.log("spotify works");
-    });
-}
+      });
+      
+    }
