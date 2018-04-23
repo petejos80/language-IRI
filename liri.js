@@ -80,3 +80,6 @@ function spotifyFunction() {
       });
       
     }
+
+// Function 3/4 - Movie OMDB
+function movieFunction() {
