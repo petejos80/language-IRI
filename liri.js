@@ -37,7 +37,7 @@ case "movie-this":
   break;
 
 case "do-what-it-says":
-  doFunction();
+  doWhatItSays()
   break;
 }
 
@@ -55,12 +55,8 @@ for (var i = 2; i < nodeArgs.length; i++) {
       value += nodeArgs[i];
   
     }
-  }
+}
   
-
-
-
-
 
 // FUNCTIONS // 
 // In this app, there are 4 different functions that are called using the switch cases above.
@@ -110,10 +106,10 @@ function spotifyFunction() {
 // Function 3/4 - Movie OMDB
 function movieFunction() {
     
-    var queryUrl = "http://www.omdbapi.com/?t=" + value + "&y=&plot=short&apikey=trilogy";
+    var queryUrl = "http://www.omdbapi.com/?t=" + value + "&y=&plot=full&tomatoes=true&apikey=trilogy";
 
     // This line is just to help us debug against the actual URL.
-    console.log(queryUrl);
+    // console.log(queryUrl);
     
     request(queryUrl, function(error, response, body) {
     
@@ -122,7 +118,40 @@ function movieFunction() {
     
         // Parse the body of the site and recover just the imdbRating
         // (Note: The syntax below for parsing isn't obvious. Just spend a few moments dissecting it).
-        console.log("Release Year: " + JSON.parse(body).Year);
+        var jsonData = JSON.parse(body);
+
+        // console.log("Release Year: " + JSON.stringify(response.body, null, "\t"));
+        console.log("Title: " + jsonData.Title);
+        console.log("Release Year: " + jsonData.Year);
+        console.log("IMDB Rating: " + jsonData.imdbRating);
+        console.log("Rotten Tomatoes Rating: " + jsonData.tomatoRating);
+        console.log("Country: " + jsonData.Country);
+        console.log("Language: " + jsonData.Language);
+        console.log("Plot: " + jsonData.Plot);
+        console.log("Actors: " + jsonData.Actors);
+
       }
     });
 }
+
+var doWhatItSays = function() {
+  // Use FS to analuyze contents of random.txt file
+  fs.readFile('./random.txt', 'utf8', function (err, data) {
+    if (err) throw err;
+
+    var dataArr = data.split(',');
+
+    if (dataArr.length == 2) {
+      pick(dataArr[0], dataArr[1]);
+    } else if (dataArr.length == 1) {
+      pick(dataArr[0]);
+    }
+  });
+}
+
+/* Questions 
+
+Spotify search showing random things
+
+
+*/
