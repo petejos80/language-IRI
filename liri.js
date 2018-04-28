@@ -37,7 +37,7 @@ case "movie-this":
   break;
 
 case "do-what-it-says":
-  doWhatItSays()
+  doWhatItSays();
   break;
 }
 
@@ -107,7 +107,7 @@ function spotifyFunction() {
 function movieFunction() {
     
     var queryUrl = "http://www.omdbapi.com/?t=" + value + "&y=&plot=full&tomatoes=true&apikey=trilogy";
-
+  console.log(queryUrl);
     // This line is just to help us debug against the actual URL.
     // console.log(queryUrl);
     
@@ -120,11 +120,17 @@ function movieFunction() {
         // (Note: The syntax below for parsing isn't obvious. Just spend a few moments dissecting it).
         var jsonData = JSON.parse(body);
 
-        // console.log("Release Year: " + JSON.stringify(response.body, null, "\t"));
+        // console.log("Release Year: " + response.body);
         console.log("Title: " + jsonData.Title);
         console.log("Release Year: " + jsonData.Year);
-        console.log("IMDB Rating: " + jsonData.imdbRating);
-        console.log("Rotten Tomatoes Rating: " + jsonData.tomatoRating);
+ 
+        // Use a function to loop through ratings array and only pick out Rotten Tomatoes review
+        jsonData.Ratings.forEach( function (element) {
+          // console.log(element);
+            if(element.Source === 'Rotten Tomatoes')
+            console.log(element.Source + '\t' + 'Rating: ' + element.Value);
+        });
+
         console.log("Country: " + jsonData.Country);
         console.log("Language: " + jsonData.Language);
         console.log("Plot: " + jsonData.Plot);
@@ -146,12 +152,20 @@ var doWhatItSays = function() {
     } else if (dataArr.length == 1) {
       pick(dataArr[0]);
     }
+
   });
+
+function processDoWhat () {
+  console.log(doWhatItSays);
+}
 }
 
-/* Questions 
 
-Spotify search showing random things
+// NOTES
 
-
-*/
+    // console.log("IMDB Rating: " + jsonData.imdbRating);
+    // console.log("Rotten Tomatoes Rating: " + jsonData.tomatoRating);
+    // for(var i=0; i < jsonData.Ratings.length; i++) {
+    //   if(jsonData.Ratings[i].Source === 'Rotten Tomatoes')
+    //   console.log('Website:' + jsonData.Ratings[i].Source + '\t' + 'Rating: ' + jsonData.Ratings[i].Value);
+    // }
