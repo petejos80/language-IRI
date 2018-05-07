@@ -140,6 +140,7 @@ function movieFunction() {
     });
 }
 
+// Function 4/4 - do-what-it-saus
 var doWhatItSays = function() {
   // Use FS to analuyze contents of random.txt file
   fs.readFile('./random.txt', 'utf8', function (err, data) {
