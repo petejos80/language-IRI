@@ -1,6 +1,5 @@
 require("dotenv").config();
 
-
 // GLOBAL VARIABLES //
 // =========================================================================================
 var fs = require("fs");
@@ -125,8 +124,9 @@ function movieFunction() {
         console.log("Release Year: " + jsonData.Year);
  
         // Use a function to loop through ratings array and only pick out Rotten Tomatoes review
-        jsonData.Ratings.forEach( function (element) {
-          // console.log(element);
+        jsonData.Ratings.map( function (element) {
+          console.log(element);
+          console.log(jsonData.Ratings)
             if(element.Source === 'Rotten Tomatoes')
             console.log(element.Source + '\t' + 'Rating: ' + element.Value);
         });
