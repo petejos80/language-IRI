@@ -13,7 +13,7 @@ var song = process.argv[3];
 execute node liri.js my-tweets to invoke the twitter function, or node liri.js spotify-this-song 'SONGNAME'
 to invoke the spotify function */
 switch (action) {
-    case "my-tweets":
+    case "show-tweets":
     twitterFunction();
     break;
     
@@ -25,7 +25,8 @@ switch (action) {
 
 
 // FUNCTION 1
-// TWITTER FUNCTION - Copied and pasted directly from https://www.npmjs.com/package/twitter
+/* TWITTER FUNCTION - Copied and pasted directly from https://www.npmjs.com/package/twitter
+To invoke this function, execute: node liri.js show-tweets */
 function twitterFunction() {
 
     var Twitter = require('twitter');
@@ -49,18 +50,22 @@ function twitterFunction() {
 }
 
 // FUNCTION 2
-// SPOTIFY FUNCTION - Copied and pasted directly from https://www.npmjs.com/package/spotify
+/* SPOTIFY FUNCTION - Copied and pasted directly from https://www.npmjs.com/package/node-spotify-api
+To use this function, execute: node liri.js spotify-this-song 'thriller' */
 function spotifyFunction() {
     
-    var spotify = require('spotify');
- 
+    var Spotify = require('node-spotify-api');
+
+    var spotify = new Spotify({
+        id: process.env.SPOTIFY_ID,
+        secret: process.env.SPOTIFY_SECRET,
+      });
+
     spotify.search({ type: 'track', query: song }, function(err, data) {
         if ( err ) {
             console.log('Error occurred: ' + err);
         return;
         }
-        // console.log('Artist: ' + data.tracks.items[0].artists[0].name);
-        console.log(data);
+        console.log('Artist: ' + data.tracks.items[0].artists[0].name);
     });
-    
 }
