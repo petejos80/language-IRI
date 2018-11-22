@@ -3,9 +3,9 @@
 require("dotenv").config();
 
 // STEP 2
-// If your process.argv[2] is equal to "show-tweets" then invoke twitterFunction
-// To see this in action, execute this command in your terminal: node liri.js show-tweets
-// In the example from the line above, node = process.argv[0], liri.js = process.argv[1], show-tweets = process.argv[2]
+/* If your process.argv[2] is equal to "show-tweets" then invoke twitterFunction
+To see this in action, execute this command in your terminal: node liri.js show-tweets
+In the example from the line above, node = process.argv[0], liri.js = process.argv[1], show-tweets = process.argv[2] */
 if (process.argv[2] === "show-tweets") {
     twitterFunction();
   }
@@ -14,7 +14,7 @@ if (process.argv[2] === "show-tweets") {
 // Declare the Twitter function.  This function gets called in the if-statement above in order to fetch tweets.
 function twitterFunction() {
 
-    // Method for collecting Tweets using NPM package - the code below is copied directly from https://www.npmjs.com/package/twitter
+    // Method for fetching latest Tweets using NPM package - the code below is copied directly from https://www.npmjs.com/package/twitter
     var Twitter = require('twitter');
 
     var client = new Twitter({
@@ -29,7 +29,9 @@ function twitterFunction() {
         if (!error) {
             // Use a for-loop to iterate through the API response data
             for( var i=0; i<tweets.length; i++) {
-                console.log(tweets[i].text);
+                console.log(tweets[i].text); 
+                console.log(tweets[i].created_at);
+             // console.log(....................);
             }
         }
     });

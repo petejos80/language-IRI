@@ -3,8 +3,8 @@
 require("dotenv").config();
 
 // STEP 2
-// Declare an action variable equal to process.argv[2] - this will be used in the swtch statement below
-// The song variable is used for song name in the spotify function, EX: node liri.js spotify-this-song 'hello'
+/* Declare an action variable equal to process.argv[2] - this will be used in the swtch statement below
+The song variable is used for song name in the spotify function, EX: node liri.js spotify-this-song 'hello' */
 var action = process.argv[2];
 var song = process.argv[3];
 
@@ -44,6 +44,8 @@ function twitterFunction() {
             // Use a for-loop to iterate through the API response data
             for( var i=0; i<tweets.length; i++) {
                 console.log(tweets[i].text);
+                console.log(tweets[i].created_at);
+                // console.log(.................);
             }
         }
     });
