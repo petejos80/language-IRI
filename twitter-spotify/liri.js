@@ -3,17 +3,31 @@
 require("dotenv").config();
 
 // STEP 2
-// If your process.argv[2] is equal to "show-tweets" then invoke twitterFunction
-// To see this in action, execute this command in your terminal: node liri.js show-tweets
-// In the example from the line above, node = process.argv[0], liri.js = process.argv[1], show-tweets = process.argv[2]
-if (process.argv[2] === "show-tweets") {
-    twitterFunction();
-  }
+// Declare an action variable equal to process.argv[2] - this will be used in the swtch statement below
+// The song variable is used for song name in the spotify function, EX: node liri.js spotify-this-song 'hello'
+var action = process.argv[2];
+var song = process.argv[3];
 
-// Declare the Twitter function.  This function gets called in the if-statement above in order to fetch tweets.
+// STEP 3
+/* Use a switch statement to invoke either the twitter function or the spotify function, for instance
+execute node liri.js my-tweets to invoke the twitter function, or node liri.js spotify-this-song 'SONGNAME'
+to invoke the spotify function */
+switch (action) {
+    case "my-tweets":
+    twitterFunction();
+    break;
+    
+    case "spotify-this-song":
+    spotifyFunction();
+    break;
+    }
+
+
+
+// FUNCTION 1
+// TWITTER FUNCTION - Copied and pasted directly from https://www.npmjs.com/package/twitter
 function twitterFunction() {
 
-    // Method for collecting Tweets using NPM package - copied directly from https://www.npmjs.com/package/twitter
     var Twitter = require('twitter');
 
     var client = new Twitter({
@@ -28,10 +42,25 @@ function twitterFunction() {
         if (!error) {
             // Use a for-loop to iterate through the API response data
             for( var i=0; i<tweets.length; i++) {
-                console.log(tweets[i].created_at);
-                console.log(' ');
                 console.log(tweets[i].text);
             }
         }
     });
+}
+
+// FUNCTION 2
+// SPOTIFY FUNCTION - Copied and pasted directly from https://www.npmjs.com/package/spotify
+function spotifyFunction() {
+    
+    var spotify = require('spotify');
+ 
+    spotify.search({ type: 'track', query: song }, function(err, data) {
+        if ( err ) {
+            console.log('Error occurred: ' + err);
+        return;
+        }
+        // console.log('Artist: ' + data.tracks.items[0].artists[0].name);
+        console.log(data);
+    });
+    
 }
